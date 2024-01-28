@@ -297,21 +297,21 @@ class App extends React.Component<{}, AppState> {
       return maxEarlyStart;
     };
 
+    let lastNodeKey;
     nodeDataArray.forEach((node) => {
       node.earlyStart = calculateEarlyStartRecursive(node.key);
-
       // Oblicz wartości 'lateFinish' dla ostatniego eventu
       const links = linkDataArray.filter((link) => link.from === node.key);
       if (!links || links.length === 0) {
         // Brak następujących zdarzeń, więc 'lateFinish' jest równe 'earlyStart' + 'length'
         node.lateFinish = node.earlyStart + node.length;
+        lastNodeKey=node.key
       }
+      
     })
 
-    // Oblicz wartości 'earlyStart' dla każdego eventu
+    // Oblicz wartości 'lateFinish' dla każdego eventu
     nodeDataArray.forEach((node) => {
-      node.earlyStart = calculateEarlyStartRecursive(node.key);
-
       // Oblicz wartości 'lateFinish' dla każdego eventu
       const links = linkDataArray.filter((link) => link.from === node.key);
       if (!links || links.length === 0) {
